@@ -37,7 +37,10 @@ jobs:
 #      - name: Deploy Built Image
 #        run: cf push get-into-teaching-web --docker-image dfedigital/get-into-teaching-web:latest
   calculate_sha:
-    - name: Check out the repo
-      uses: actions/checkout@v2
-    - name: "determine the tag the docker action used"
-      run: git rev-parse --short HEAD
+    name: work out sha
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: "determine the tag the docker action used"
+        run: git rev-parse --short HEAD
