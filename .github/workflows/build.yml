@@ -1,23 +1,23 @@
 name: Build the Docker image
 on: [push]
 jobs:
-  push_to_registry:
-    name: Build and push to DockerHub
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
-          repository: ${{ secrets.DOCKERHUB_REPOSITORY }}
-          always_pull: true
-          add_git_labels: true
-          tag_with_ref: true
-          tag_with_sha: true
-          push: true
+#  push_to_registry:
+#    name: Build and push to DockerHub
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out the repo
+#        uses: actions/checkout@v2
+#      - name: Push to Docker Hub
+#        uses: docker/build-push-action@v1
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
+#          repository: ${{ secrets.DOCKERHUB_REPOSITORY }}
+#          always_pull: true
+#          add_git_labels: true
+#          tag_with_ref: true
+#          tag_with_sha: true
+#          push: true
   deploy:
     name: Deploy to GovUK PaaS
     runs-on: ubuntu-latest
