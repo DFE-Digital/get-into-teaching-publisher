@@ -29,6 +29,9 @@ jobs:
       - name: Check CloudFoundry CLI version
         run: cf --version
       - name: Login to PaaS
-        run: cf login -a api.london.cloud.service.gov.uk -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "${{ secrets.GOVUKPAAS_PASSWORD }}"
-      - name: Check PaaS Org and Space
+        run: cf login -a api.london.cloud.service.gov.uk -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "${{ secrets.GOVUKPAAS_PASSWORD }}" -o dfe-teacher-services -s get-into-teaching
+      - name: Current Org and Space
         run: cf target
+      - name: Deploy Built Image
+        run: cf push get-into-teaching-web --docker-image dfedigital/get-into-teaching-web:latest
+

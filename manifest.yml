@@ -1,0 +1,4 @@
+---
+applications:
+- name: get-into-teaching-web
+  memory: 64M
