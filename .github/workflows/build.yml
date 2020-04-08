@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Install CloudFoundry CLI
         run: |
-          cd /tmp
-          which wget
-          which curl
+          wget -O /tmp/cf-cli.deb "https://packages.cloudfoundry.org/stable?release=debian64&source=github"
+          dpkg -i /tmp/cf-cli.deb
+          cf --version
 
