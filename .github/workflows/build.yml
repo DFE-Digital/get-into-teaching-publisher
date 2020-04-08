@@ -40,7 +40,5 @@ jobs:
     name: work out sha
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
       - name: "determine the tag the docker action used"
-        run: git rev-parse --short HEAD
+        run: echo `echo "$GITHUB_SHA" | head -c 7`
