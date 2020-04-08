@@ -11,6 +11,8 @@
   <body>
     <div id="main">
       <%= yield %>
+			
+			<p>Last generated at <strong><%= Time.now.to_s %></strong></p>
     </div>
     <div id="sidebar">
       <h2>Documentation</h2>
