@@ -29,5 +29,6 @@ jobs:
       - name: Check CloudFoundry CLI version
         run: cf --version
       - name: Login to PaaS
-        run: cf login -a api.london.cloud.service.gov.uk -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "testing visibility"
-
+        run: cf login -a api.london.cloud.service.gov.uk -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "${{ secrets.GOVUKPAAS_PASSWORD }}"
+      - name: Check PaaS Org and Space
+        run: cf target
