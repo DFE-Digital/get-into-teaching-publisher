@@ -24,4 +24,7 @@ jobs:
     steps:
       - name: Install CloudFoundry CLI
         run: |
-          echo "Hello world!"
+          cd /tmp
+          which wget
+          which curl
+
