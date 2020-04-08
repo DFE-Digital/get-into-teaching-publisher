@@ -1,44 +1,40 @@
 name: Build the Docker image
 on: [push]
 jobs:
-#  push_to_registry:
-#    name: Build and push to DockerHub
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Check out the repo
-#        uses: actions/checkout@v2
-#      - name: Push to Docker Hub
-#        uses: docker/build-push-action@v1
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
-#          repository: ${{ secrets.DOCKERHUB_REPOSITORY }}
-#          always_pull: true
-#          add_git_labels: true
-#          tag_with_ref: true
-#          tag_with_sha: true
-#          push: true
-#  deploy:
-#    name: Deploy to GovUK PaaS
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Check out the repo
-#        uses: actions/checkout@v2
-#      - name: Download CloudFoundry CLI
-#        run: wget -O /tmp/cf-cli.deb "https://packages.cloudfoundry.org/stable?release=debian64&source=github"
-#      - name: Install CloudFoundry CLI
-#        run: sudo dpkg -i /tmp/cf-cli.deb
-#      - name: Check CloudFoundry CLI version
-#        run: cf --version
-#      - name: Login to PaaS
-#        run: cf login -a api.london.cloud.service.gov.uk -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "${{ secrets.GOVUKPAAS_PASSWORD }}" -o dfe-teacher-services -s get-into-teaching
-#      - name: Current Org and Space
-#        run: cf target
-#      - name: Deploy Built Image
-#        run: cf push get-into-teaching-web --docker-image dfedigital/get-into-teaching-web:latest
-  calculate_sha:
-    name: work out sha
+  build_and_push:
+    name: Build and push to DockerHub
     runs-on: ubuntu-latest
     steps:
-      - name: "determine the tag the docker action used"
-        run: echo `echo "$GITHUB_SHA" | head -c 7`
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PERSONAL_ACCESS_TOKEN }}
+          repository: ${{ secrets.DOCKERHUB_REPOSITORY }}
+          always_pull: true
+          add_git_labels: true
+          tag_with_ref: true
+          tag_with_sha: true
+          push: true
+  deploy:
+    name: Deploy to GovUK PaaS
+    runs-on: ubuntu-latest
+    needs:
+      - build_and_push
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Download CloudFoundry CLI
+        run: wget -O /tmp/cf-cli.deb "https://packages.cloudfoundry.org/stable?release=debian64&source=github"
+      - name: Install CloudFoundry CLI
+        run: sudo dpkg -i /tmp/cf-cli.deb
+      - name: Check CloudFoundry CLI version
+        run: cf --version
+      - name: Login to PaaS
+        run: cf login -a api.london.cloud.service.gov.uk -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "${{ secrets.GOVUKPAAS_PASSWORD }}" -o dfe-teacher-services -s get-into-teaching
+      - name: Current Org and Space
+        run: cf target
+      - name: Deploy Built Image
+        run: cf push get-into-teaching-web --docker-image dfedigital/get-into-teaching-web:sha-$(git rev-parse --short $GITHUB_SHA)
