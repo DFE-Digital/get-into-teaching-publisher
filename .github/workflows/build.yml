@@ -29,5 +29,5 @@ jobs:
       - name: Check CloudFoundry CLI version
         run: cf --version
       - name: Login to PaaS
-        run: cf login -u "$GOVUKPAAS_USERNAME" -p "testing visibility"
+        run: cf login -u "${{ secrets.GOVUKPAAS_USERNAME }}" -p "testing visibility"
 
