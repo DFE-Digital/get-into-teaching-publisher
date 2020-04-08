@@ -2,7 +2,7 @@ name: Build the Docker image
 on: [push]
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Build and push to DockerHub
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -18,3 +18,10 @@ jobs:
           tag_with_ref: true
           tag_with_sha: true
           push: true
+  deploy:
+    name: Deploy to GovUK PaaS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install CloudFoundry CLI
+        run: |
+          echo "Hello world!"
