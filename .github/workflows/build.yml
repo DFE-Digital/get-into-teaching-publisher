@@ -1,8 +1,5 @@
 name: Build and Deploy
-on:
-  push:
-    branches:
-      - master
+on: [ push ]
 jobs:
   build_and_push:
     name: Build and push to DockerHub
