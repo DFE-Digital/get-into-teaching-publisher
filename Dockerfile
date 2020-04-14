@@ -1,4 +1,4 @@
-FROM ruby:2.7.1-alpine AS build
+FROM ruby:2.7.1-alpine
 
 RUN mkdir /app
 WORKDIR /app
@@ -9,9 +9,3 @@ RUN bundle
 
 COPY . .
 RUN bundle exec nanoc compile
-
-FROM nginx:stable-alpine
-ENV PORT=80
-COPY docker-run.sh /
-CMD /docker-run.sh
-COPY --from=build /app/output/ /usr/share/nginx/html/
