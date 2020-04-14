@@ -40,4 +40,4 @@ jobs:
       - name: Current Org and Space
         run: cf target
       - name: Deploy Built Image
-        run: cf push get-into-teaching-web --docker-image dfedigital/get-into-teaching-web:sha-$(git rev-parse --short $GITHUB_SHA)
+        run: cf push get-into-teaching-web --docker-image ${{ secrets.DOCKERHUB_REPOSITORY }}:sha-$(git rev-parse --short $GITHUB_SHA)
