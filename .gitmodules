@@ -1,0 +1,3 @@
+[submodule "ui"]
+	path = ui
+	url = https://github.com/DFE-Digital/get-into-teaching-ui.git
